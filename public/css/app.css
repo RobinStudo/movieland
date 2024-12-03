@@ -1,0 +1,23 @@
+body {
+    background-color: #1e272e;
+    color: #d2dae2;
+    margin: 0;
+}
+
+a {
+    color:  #d2dae2;
+}
+
+header {
+    background-color: #3c40c6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+header ul {
+    display: flex;
+    gap: 20px;
+    list-style-type: none;
+}
