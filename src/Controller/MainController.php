@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,9 +11,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
+    public function index(MovieRepository $movieRepository): Response
     {
-        return new Response('Accueil');
+        return $this->render('main/index.html.twig', [
+            'countMovies' => $movieRepository->count(),
+        ]);
     }
 
     #[Route('/about', name: 'about')]

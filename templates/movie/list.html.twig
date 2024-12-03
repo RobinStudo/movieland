@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Movieland</title>
+    </head>
+    <body>
+        <h1>Liste des films</h1>
+
+        {% for movie in movies %}
+            <article>
+                <h2>{{ movie.title }}</h2>
+                <ul>
+                    <li>{{ movie.category.label }}</li>
+                    <li>{{ movie.director }}</li>
+                </ul>
+            </article>
+        {% endfor %}
+    </body>
+</html>

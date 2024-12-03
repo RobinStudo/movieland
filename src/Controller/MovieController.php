@@ -19,15 +19,18 @@ class MovieController extends AbstractController
     public function list(): Response
     {
         $movies = $this->movieRepository->findBy([], ['releasedAt' => 'DESC']);
-        dd($movies);
 
-        return new Response('Liste des films');
+        return $this->render('movie/list.html.twig', [
+            'movies' => $movies,
+        ]);
     }
 
     #[Route('/{id:movie}', name: 'single', requirements: ['id' => '\d+'])]
     public function single(Movie $movie): Response
     {
-        return new Response('Film : ' . $movie->getTitle());
+        return $this->render('movie/single.html.twig', [
+            'movie' => $movie,
+        ]);
     }
 
     #[Route('/new', name: 'new')]
