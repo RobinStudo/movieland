@@ -15,4 +15,14 @@ class MovieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Movie::class);
     }
+
+    public function findRandom(): Movie
+    {
+        $qb = $this->createQueryBuilder('m');
+
+        $qb->orderBy('RAND()');
+        $qb->setMaxResults(1);
+
+        return $qb->getQuery()->getSingleResult();
+    }
 }

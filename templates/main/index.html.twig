@@ -13,4 +13,23 @@
     <p>
         {{ countMovies }} films
     </p>
+
+    <h2>Découverte de film</h2>
+    <p>
+        <a href="{{ path('movie_single', {id: randomMovie.id}) }}">
+            {{ randomMovie.title }}
+        </a>
+    </p>
+
+    <h2>Catégorie la plus populaire</h2>
+    <p>
+        {{ mostPopularCategory.label }}
+    </p>
+
+    {% if latestDirectorMovie %}
+        <h2>Dernier réalisateur actif</h2>
+        <p>
+            {{ latestDirectorMovie }}
+        </p>
+    {% endif %}
 {% endblock %}

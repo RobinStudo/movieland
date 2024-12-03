@@ -36,7 +36,7 @@ class Movie
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\ManyToOne(inversedBy: 'directedMovies')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'directedMovies')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Person $director = null;
 

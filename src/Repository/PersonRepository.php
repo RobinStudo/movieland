@@ -15,4 +15,15 @@ class PersonRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Person::class);
     }
+
+    public function findLatestDirectorMovie(): ?Person
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $qb->join('p.directedMovies', 'm');
+        $qb->orderBy('m.releasedAt', 'DESC');
+        $qb->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }
