@@ -7,5 +7,17 @@
 {% block body %}
     <h1>Créer un film</h1>
 
-    {{ form(form) }}
+    {{ form_start(form) }}
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.summary) }}
+    {{ form_row(form.poster) }}
+    {{ form_row(form.releasedAt) }}
+    {{ form_row(form.allPublic) }}
+    {{ form_row(form.director) }}
+    {{ form_row(form.actors) }}
+    {{ form_row(form.category) }}
+
+    <button>Sauvegarder</button>
+    {{ form_end(form) }}
 {% endblock %}

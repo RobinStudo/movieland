@@ -8,7 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[UniqueEntity(fields: ['title'])]
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 class Movie
 {
@@ -17,25 +20,44 @@ class Movie
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(
+        message: 'Le titre est obligatoire',
+    )]
+    #[Assert\Length(
+        max: 80,
+        maxMessage: 'Le titre ne peut pas dépasser {{ limit }} caractères'
+    )]
     #[ORM\Column(length: 80)]
     private ?string $title = null;
 
+    #[Assert\Length(
+        max: 2000,
+        maxMessage: 'Le résumé ne peut pas dépasser {{ limit }} caractères'
+    )]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $summary = null;
 
+    #[Assert\Url(
+        protocols: ['https'],
+        requireTld: true,
+    )]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $poster = null;
 
+    #[Assert\LessThan('today')]
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?DateTimeInterface $releasedAt = null;
 
+    #[Assert\NotNull]
     #[ORM\Column]
     private ?bool $allPublic = null;
 
+    #[Assert\NotNull]
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
+    #[Assert\NotNull]
     #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'directedMovies')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Person $director = null;
@@ -43,6 +65,7 @@ class Movie
     /**
      * @var Collection<int, Person>
      */
+    #[Assert\Count(min: 2)]
     #[ORM\ManyToMany(targetEntity: Person::class, inversedBy: 'actedMovies')]
     #[ORM\JoinTable(name: 'cast')]
     private Collection $actors;
