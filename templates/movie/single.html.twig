@@ -13,6 +13,7 @@
         <li>Réalisateur : {{ movie.director }}</li>
         <li>Genre : {{ movie.category.label }}</li>
         <li>Date de sortie : {{ movie.releasedAt|format_date('long', locale: 'fr') }}</li>
+        <li>Sortie depuis {{ movie.relativeRelease }} ans</li>
         <li>
             {% if movie.allPublic %}
                 Tout public

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MovieRepository;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -186,5 +187,12 @@ class Movie
         $this->actors->removeElement($actor);
 
         return $this;
+    }
+
+    public function relativeRelease(): string
+    {
+        $now = new DateTime();
+
+        return $now->diff($this->releasedAt)->y;
     }
 }
