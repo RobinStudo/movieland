@@ -10,12 +10,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[UniqueEntity(fields: ['title'])]
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 class Movie
 {
+    #[Groups(['person:extra'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -28,6 +30,7 @@ class Movie
         max: 80,
         maxMessage: 'Le titre ne peut pas dépasser {{ limit }} caractères'
     )]
+    #[Groups(['person:extra'])]
     #[ORM\Column(length: 80)]
     private ?string $title = null;
 

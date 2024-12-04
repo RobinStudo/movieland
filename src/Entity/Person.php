@@ -2,39 +2,70 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\PersonRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Get(
+            normalizationContext: ['groups' => ['person:read', 'person:extra']],
+        ),
+        new Post(),
+        new Patch(),
+        new Delete(),
+    ],
+    normalizationContext: [
+        'groups' => ['person:read'],
+    ],
+)]
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
 class Person
 {
+    #[Groups(['person:read'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['person:read'])]
+    #[Assert\NotBlank]
     #[ORM\Column(length: 60)]
     private ?string $firstname = null;
 
+    #[Groups(['person:read'])]
+    #[Assert\NotBlank]
     #[ORM\Column(length: 60)]
     private ?string $lastname = null;
 
+    #[Groups(['person:read'])]
+    #[Assert\NotBlank]
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?DateTimeImmutable $birthdate = null;
 
     /**
      * @var Collection<int, Movie>
      */
+    #[Groups(['person:extra'])]
     #[ORM\OneToMany(targetEntity: Movie::class, mappedBy: 'director')]
     private Collection $directedMovies;
 
     /**
      * @var Collection<int, Movie>
      */
+    #[Groups(['person:extra'])]
     #[ORM\ManyToMany(targetEntity: Movie::class, mappedBy: 'actors')]
     private Collection $actedMovies;
 
