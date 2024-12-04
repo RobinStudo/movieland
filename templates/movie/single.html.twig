@@ -23,4 +23,9 @@
         </li>
     </ul>
     <img src="{{ movie.poster }}" alt="Affiche de {{ movie.title }}">
+
+    <form action="{{ path('movie_delete', { id: movie.id }) }}" method="post">
+        <input type="hidden" name="token" value="{{ csrf_token('movie-delete-' ~ movie.id) }}">
+        <button>Supprimer</button>
+    </form>
 {% endblock %}

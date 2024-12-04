@@ -39,6 +39,20 @@ class MovieController extends AbstractController
         ]);
     }
 
+    #[Route('/{id:movie}/delete', name: 'delete', requirements: ['id' => '\d+'])]
+    public function delete(Request $request, Movie $movie): Response
+    {
+        $token = $request->request->get('token');
+        $tokenName = sprintf('movie-delete-%s', $movie->getId());
+
+        if ($this->isCsrfTokenValid($tokenName, $token)) {
+            $this->em->remove($movie);
+            $this->em->flush();
+        }
+
+        return $this->redirectToRoute('movie_list');
+    }
+
     #[Route('/new', name: 'new')]
     public function form(Request $request): Response
     {
