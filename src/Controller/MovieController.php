@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\Movie;
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
@@ -17,7 +16,7 @@ class MovieController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
-        private readonly MovieRepository $movieRepository
+        private readonly MovieRepository $movieRepository,
     ) {
     }
 
