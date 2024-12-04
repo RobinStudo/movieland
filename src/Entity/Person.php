@@ -25,7 +25,9 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
         new Post(),
         new Patch(),
-        new Delete(),
+        new Delete(
+            security: 'is_granted("ROLE_ADMIN")',
+        ),
     ],
     normalizationContext: [
         'groups' => ['person:read'],
